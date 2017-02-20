@@ -1,9 +1,9 @@
 <scheme name="uffindell-csharp" version="142">
-  <option name="LINE_SPACING" value="1.0" />
+  <option name="FONT_SCALE" value="1.0" />
   <option name="EDITOR_FONT_SIZE" value="12" />
+  <option name="EDITOR_LIGATURES" value="true" />
   <option name="CONSOLE_FONT_NAME" value="Consolas" />
-  <option name="CONSOLE_FONT_SIZE" value="13" />
-  <option name="EDITOR_FONT_NAME" value="Consolas" />
+  <option name="EDITOR_FONT_NAME" value="Fira Code" />
   <colors>
     <option name="ADDED_LINES_COLOR" value="384c38" />
     <option name="ANNOTATIONS_COLOR" value="8b999f" />
@@ -30,7 +30,7 @@
     <option name="FILESTATUS_addedOutside" value="629755" />
     <option name="FILESTATUS_changelistConflict" value="d5756c" />
     <option name="FILESTATUS_modifiedOutside" value="6897bb" />
-    <option name="GUTTER_BACKGROUND" value="1e1e1e" />
+    <option name="GUTTER_BACKGROUND" value="50211d" />
     <option name="INDENT_GUIDE" value="373737" />
     <option name="LINE_NUMBERS_COLOR" value="2b91af" />
     <option name="METHOD_SEPARATORS_COLOR" value="4d4d4d" />
