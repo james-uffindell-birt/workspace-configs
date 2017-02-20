@@ -1,5 +1,5 @@
 <profile version="1.0">
-  <option name="myName" value="inspections-2017-02-02" />
+  <option name="myName" value="uffindell-inspections" />
   <inspection_tool class="AbstractMethodCallInConstructor" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="AmbiguousFieldAccess" enabled="true" level="WARNING" enabled_by_default="true" />
   <inspection_tool class="AmbiguousMethodCall" enabled="true" level="WARNING" enabled_by_default="true" />
