@@ -42,9 +42,9 @@
     new = 148
     newMoved = 192
     newMovedAlternative = 194
-    whitespace = 214
+    whitespace = 214 reverse
     plain = 241
-    
+
 [color "decorate"]
     branch = 209
     remoteBranch = 107
@@ -328,9 +328,7 @@
     excludesfile = C:/Users/james.uffindell/.gitglobal
     attributesfile = C:/Users/james.uffindell/.gitattributes
     pager = less -r
-    #don't consider trailing whitespace a serious error
-    whitespace=-trailing-space
-    
+
 [color]
     ui = always
 
