@@ -37,7 +37,11 @@
     frag = 117
     func = 141
     old = 160
+    oldMoved = 209
+    oldMovedAlternative = 203
     new = 148
+    newMoved = 192
+    newMovedAlternative = 194
     whitespace = 214
     plain = 241
     
@@ -311,6 +315,7 @@
     indentHeuristic = on
     wsErrorHighlight = all
     statGraphWidth = 50
+    colorMoved = zebra
 
 [diff "csharp"]
     xfuncname = ^[[:space:]]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[[:space:]]+)*[][<>@.~_[:alnum:]]+[[:space:]]+[<>@._[:alnum:]]+[[:space:]]*\\([^\\(\\)]*)\\)?[[:space:]]*$
