@@ -313,7 +313,7 @@
     statGraphWidth = 50
 
 [diff "csharp"]
-    xfuncname = ^[[:space:]]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[[:space:]]+)*[][<>@.~_[:alnum:]]+[[:space:]]+[<>@._[:alnum:]]+[[:space:]]*\\(.*\\))[[:space:]]*$
+    xfuncname = ^[[:space:]]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[[:space:]]+)*[][<>@.~_[:alnum:]]+[[:space:]]+[<>@._[:alnum:]]+[[:space:]]*\\([^\\(\\)]*)\\)?[[:space:]]*$
 
 [rerere]
     enabled = true
