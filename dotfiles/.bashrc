@@ -31,7 +31,8 @@ function parse_git_branch {
 
   git rev-parse --git-dir &> /dev/null
   git_status="$(git status 2> /dev/null)"
-  working_file_count="$(git status -s 2> /dev/null | egrep '^.[MARCD]' | wc -l)"
+  # also include "unmerged" files in working file count
+  working_file_count="$(git status -s 2> /dev/null | egrep '^.[MARCD]|^.U|^U.' | wc -l)"
   indexed_file_count="$(git status -s 2> /dev/null | egrep '^[MARCD]' | wc -l)"
   untracked_file_count="$(git status -s 2> /dev/null | egrep '^\?\?' | wc -l)"
   
@@ -73,7 +74,6 @@ function parse_git_branch {
   else
     untracked_state="${PALE_BLUE}❄ ∞  "
   fi
-  
   state="${index_state}${working_state}${untracked_state}"
   
   #STEP 2: check the status of our branch compared to its tracking branch (if any)
