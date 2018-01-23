@@ -1,7 +1,7 @@
 # This is Git's per-user configuration file.
 [user]
     useConfigOnly = true
-    name = James N. Uffindell
+    #name = James N. Uffindell
     #email = fill in as appropriate
 
 # some actually sane color configurations
@@ -30,7 +30,7 @@
     remote = 141
     upstream = 107
     plain = 241
-    
+
 [color "diff"]
     #same as status header
     meta = 215
@@ -51,7 +51,7 @@
     HEAD = 221
     stash = 117
     tag = 148
-    
+
 [color "status"]
     added = 134
     branch = 221
@@ -62,13 +62,13 @@
     header = 215
     untracked = 117
     unmerged = 160
-    
+
 [color "interactive"]
     header = 215
     prompt = 141
     error = 160
     help = 148
-    
+
 [color "grep"]
     context = 241
     filename = 117
@@ -77,13 +77,13 @@
     separator = 215
     match = 148
     matchContext = 64
-    
+
 
 [merge]
     # why would you not make this the default?
     conflictstyle = diff3
     tool = vimdiff
-    
+
 [mergetool]
     keepBackup = false
 
@@ -94,12 +94,12 @@
     sf = status -u --short -b
     #REALLY show all files
     sff = status -u --ignored --short -b
-    
+
     #full-output equivalents
     sl = status
     slf = status -u
     slff = status -u --ignored
-    
+
     #CHECKOUT
     #-q added to avoid clogging up console with pointless success output
     co = checkout -q
@@ -111,8 +111,8 @@
     #reset accidentally-resolved file to conflicting state (plus more helpful alias)
     com = checkout -m
     unresolve = checkout -m
-    
-    
+
+
     #ADD
     a = add
     #add all files
@@ -122,7 +122,7 @@
     #work with just bits of files (from working dir to index)
     ap = add -p
     ai = add -i
-    
+
     #BRANCH
     b = branch -q
     bf = branch -q -f
@@ -142,7 +142,7 @@
     untrack = branch -q --unset-upstream
     #show branches with committish in
     bwc = branch -a --contains
-    
+
     #BISECT
     bs = bisect
     bsbg = bisect start
@@ -154,84 +154,86 @@
     #'e' for 'execute', since 'r' already taken
     bse = bisect run
     bsv = bisect view --oneline --graph
-    
+
     #DIFF
-    #diffs between HEAD and working dir
+    #diffs between HEAD and working dir (or between specified commits)
     d = diff
     dw = diff -w
     dc = diff --color-words='\\w+|[^[:space:]]'
     dcw = diff --color-words='\\w+|[^[:space:]]' -w
-    
+
     #diffs between HEAD and index ("next commit")
     ds = diff --cached
     dsw = diff --cached -w
     dsc = diff --cached --color-words='\\w+|[^[:space:]]'
     dscw = diff --cached --color-words='\\w+|[^[:space:]]' -w
-    
+
     #"last commit"
     dl = diff HEAD~ HEAD
     dlw = diff -w HEAD~ HEAD
     dlc = diff --color-words='\\w+|[^[:space:]]' HEAD~ HEAD
     dlcw = diff --color-words='\\w+|[^[:space:]]' -w HEAD~ HEAD
-    
+
     #"specific commit"
     dd = "!git d \"$1\"~ \"$1\" #"
     ddw = "!git dw \"$1\"~ \"$1\" #"
     ddc = "!git dc \"$1\"~ \"$1\" #"
     ddcw = "!git dcw \"$1\"~ \"$1\" #"
-    
+
     #for merge conflicts - what "ours" introduced in the change that is conflicting
     #diff --ours shows diff between our changes and the current conflicted file, rather than our changes and the merge-base
     do = "!git d :1:\"$1\" :2:\"$1\" #"
     doc = "!git dc :1:\"$1\" :2:\"$1\" #"
     dow = "!git dw :1:\"$1\" :2:\"$1\" #"
     docw = "!git dcw :1:\"$1\" :2:\"$1\" #"
-    
+
     #for merge conflicts - what "theirs" introduced in the change that is conflicting
     dt = "!git d :1:\"$1\" :3:\"$1\" #"
     dtc = "!git dc :1:\"$1\" :3:\"$1\" #"
     dtw = "!git dw :1:\"$1\" :3:\"$1\" #"
     dtcw = "!git dcw :1:\"$1\" :3:\"$1\" #"
-    
+
     #diff stats for what files changed by how much
-    dsts = diff --stat=250 
+    dsts = diff --stat=250
     dstsl = diff --stat=250 HEAD~ HEAD
     dstss = diff --stat=250 --cached
     dstsd = !"git diff --stat=250 \"$1\"~ \"$1\" #"
-    
+
     #the "whoops, I forgot this file" command
     can = commit -q --amend --no-edit
-    
+
     #the "whoops, I typoed that commit message" command
     reword = commit -q --amend
-    
-    #for more complicated amending
     ca = commit -q --amend
-    
+
     c = commit -q
     #for quick commits with short messages
     cm = commit -q -m
     #for when you actually PLAN to do an interactive rebase rather than doing it last-minute
     cf = commit -q --fixup
     cs = commit -q --squash
-    
+    #maybe not worth making an alias, but:
+    #commit -q -c HEAD@{1} to reuse the commit message (with editing) of wherever HEAD was before, especially good after a git rr when rebasing or amending
+
     cp = cherry-pick
     cpc = cherry-pick --continue
     cpq = cherry-pick --quit
     cpa = cherry-pick --abort
-    
+
     f = fetch -q
-    
+    #adjust main remote as necessary
+    update = fetch origin
+
     #MERGE
     #always try and make a merge commit when doing a merge
     mg = merge -q --no-ff
     mgff = merge -q --ff-only
     mga = merge --abort
     mgc = merge --continue
-    
+
     #standard marker merge
     marker = merge --no-ff -s ours
-    
+
     #REBASE
     rb = rebase -q
     rbi = rebase -q -i
@@ -241,10 +243,10 @@
     rbv = rebase --edit-todo
     rbf = rebase -q -f
     rbfi = rebase -q --no-ff -i
-    
+
     #rework the last N commits, eg "git redo 5" to rework the last 5 commits
     redo = !"git rebase -q -i HEAD~$1 #"
-    
+
     #work with just bits of files (from index to working dir)
     rp = reset -p
     #unstage a file
@@ -254,12 +256,12 @@
 
     #see who is winning at writing code
     stats = shortlog -sn --all --no-merges
-    
+
     #WORKTREE (aka "I don't trust stash")
     wa = worktree add
     wl = worktree list
     wp = worktree prune
-    
+
     #LOG
     #default option (mostly sane but lots of merges make the wraparound quite frightening)
     lg = !"git lg1"
@@ -272,20 +274,20 @@
     lgsss = !"git lg1 --simplify-by-decoration --no-merges"
     #show only stuff reachable from local branches
     lgl = !"git lg1 --not --branches=remote"
-    
+
     #show commits only in specific range
     lgr = !"git lg1-specific \"$1\"~..\"$2\" #"
-    
+
     #truncated logs - default and filtered-default modes
     lgt = !"git lg -n"
     lgst = !"git lgs -n"
     lgtb = !"git lgb -n"
-    
+
     #successively more verbose options, shamelessly stolen from someone helpful on stackoverflow
     lg1 = !"git lg1b --all"
     lg2 = !"git lg2b --all"
     lg3 = !"git lg3b --all"
-    
+
     lg1b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(241)- %an%C(reset)%C(auto)%d%C(reset)'
     lg2b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(148)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(241)- %an%C(reset)'
     lg3b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(148)(%ar)%C(reset) %C(141)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(241)- %an <%ae> %C(reset) %C(241)(committer: %cn <%ce>)%C(reset)'
@@ -301,13 +303,13 @@
     #file-specific history - git isn't great at this but these are sometimes useful anyway
     fl = log -u
     file = log --follow -p
-    
+
     #find commits missing in remotes (or other refs)
     #list all commits that exist in local branches that are not in specified remotes (doesn't easily identify rebased commits)
     allmissing = !"git log --oneline --branches --not --remotes=$1 #"
     #list all commits that are not in first branch but are in second branch; try and be clever about identifying identical patches (rebase or cherrypick)
     missing = !"git log --oneline --cherry $1...$2 #"
-    
+
 #do our best to make diff output friendly for humans
 [diff]
     renames = copies
@@ -320,11 +322,14 @@
 [diff "csharp"]
     xfuncname = ^[[:space:]]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[[:space:]]+)*[][<>@.~_[:alnum:]]+[[:space:]]+[<>@._[:alnum:]]+[[:space:]]*\\([^\\(\\)]*)\\)?[[:space:]]*$
 
+[commit]
+    status = false
+
 [rerere]
     enabled = true
-    
+
 [core]
-    #modify filepaths as appropriate
+    #modify files as appropriate
     excludesfile = C:/Users/james.uffindell/.gitglobal
     attributesfile = C:/Users/james.uffindell/.gitattributes
     pager = less -r
@@ -337,7 +342,7 @@
     autosquash = true
     #force explicit dropping of commits in interactive rebase rather than just allowing lines to be deleted
     missingCommitsCheck = error
-    
+
 #keystrokes are precious, don't make me hit enter unnecessarily
 [interactive]
     singleKey = true
@@ -345,10 +350,13 @@
 [grep]
     patternType = perl
     lineNumber = true
-    
-#our branching model means we never merge back to where we branched from
-#so having the branches track by default doesn't really help and might make git do something unexpectedly clever by accident
+
+[advice]
+    #I know how HEAD works by now
+    detachedHead = false
+
 [branch]
+    #I don't like the branch auto-tracking, use git bt to make them start tracking something
     autosetupmerge = false
 
 #standard template location for, eg, shared git hooks
