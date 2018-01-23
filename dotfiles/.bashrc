@@ -40,7 +40,7 @@ function parse_git_branch {
   branch_pattern="^On branch ([^${IFS}]*)"
   detached_pattern="^HEAD detached at ([^${IFS}]*)"
   detached_pattern_2="^HEAD detached from ([^${IFS}]*)"
-  remote_match_pattern="Your branch is up-to-date with '([^${IFS}]*)'"
+  remote_match_pattern="Your branch is up to date with '([^${IFS}]*)'"
   remote_ahead_pattern="Your branch is ahead of '([^${IFS}]*)' by ([^${IFS}]*) commit"
   remote_behind_pattern="Your branch is behind '([^${IFS}]*)' by ([^${IFS}]*) commit"
   diverge_pattern="Your branch and '([^${IFS}]*)' have diverged"
