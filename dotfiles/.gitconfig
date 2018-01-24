@@ -22,13 +22,13 @@
 #use a bunch of these, plus some extra ones, for log graphing
 #TODO still sort out the other colors in lgs
 [log]
-    graphColors = 214,209,141,107,117,160,148,134,166,175,144,153,156,211,184
+    graphColors = 214,209,141,108,117,160,149,134,166,175,144,153,156,211,184
 
 [color "branch"]
     current = 221
     local = 209
     remote = 141
-    upstream = 107
+    upstream = 108
     plain = 241
 
 [color "diff"]
@@ -39,7 +39,7 @@
     old = 160
     oldMoved = 209
     oldMovedAlternative = 203
-    new = 148
+    new = 149
     newMoved = 192
     newMovedAlternative = 194
     whitespace = 214 reverse
@@ -47,7 +47,7 @@
 
 [color "decorate"]
     branch = 209
-    remoteBranch = 107
+    remoteBranch = 108
     HEAD = 221
     stash = 117
     tag = 148
@@ -56,9 +56,9 @@
     added = 134
     branch = 221
     localBranch = 221
-    remoteBranch = 107
+    remoteBranch = 108
     nobranch = 214
-    changed = 148
+    changed = 149
     header = 215
     untracked = 117
     unmerged = 160
@@ -67,7 +67,7 @@
     header = 215
     prompt = 141
     error = 160
-    help = 148
+    help = 149
 
 [color "grep"]
     context = 241
@@ -75,7 +75,7 @@
     linenumber = 117
     function = 141
     separator = 215
-    match = 148
+    match = 149
     matchContext = 64
 
 
@@ -288,17 +288,17 @@
     lg2 = !"git lg2b --all"
     lg3 = !"git lg3b --all"
 
-    lg1b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(241)- %an%C(reset)%C(auto)%d%C(reset)'
-    lg2b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(148)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(241)- %an%C(reset)'
-    lg3b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(148)(%ar)%C(reset) %C(141)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(241)- %an <%ae> %C(reset) %C(241)(committer: %cn <%ce>)%C(reset)'
+    lg1b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(241)- %an%C(reset)%C(auto)%d%C(reset)'
+    lg2b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(241)- %an%C(reset)'
+    lg3b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset) %C(141)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(241)- %an <%ae> %C(reset) %C(241)(committer: %cn <%ce>)%C(reset)'
 
     #PICKAXE
     #commits which changed number of matching lines
-    pa = log --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
-    pav = log -p --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
+    pa = log --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
+    pav = log -p --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
     #commits which changed any matching lines
-    pac = log --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -G
-    pacv = log -p --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(148)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -G
+    pac = log --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -G
+    pacv = log -p --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -G
 
     #file-specific history - git isn't great at this but these are sometimes useful anyway
     fl = log -u
