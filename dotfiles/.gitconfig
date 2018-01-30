@@ -310,6 +310,18 @@
     #list all commits that are not in first branch but are in second branch; try and be clever about identifying identical patches (rebase or cherrypick)
     missing = !"git log --oneline --cherry $1...$2 #"
 
+    #archive a commit - put it in a ref but not in a proper branch; that way it won't get GCed but it also won't show up in branch -l
+    ar = !"git update-ref refs/archive/\"$1\" HEAD #"
+    #list archived commits
+    arl = for-each-ref --sort=-authordate --format='* %(color:117)%(objectname:short)%(color:reset) - %(color:149)(%(authordate:relative))%(color:reset) %(contents:subject) %(color:221)(%(color:reset)%(refname)%(color:221))%(color:reset)' refs/archive/
+    #resurrect an archived commit onto a new branch (but leave the archived ref around)
+    arc = !"git branch \"$2\" refs/archive/\"$1\" #"
+    #pop an archived commit onto a branch (git arp <archive> <new-branch>), deleting the archived ref
+    arp = !"git branch \"$2\" refs/archive/\"$1\" && git update-ref -d refs/archive/\"$1\" #"
+    #force versions of the above (in case the branch exists already)
+    arcf = !"git branch -f \"$2\" refs/archive/\"$1\" #"
+    arpf = !"git branch -f \"$2\" refs/archive/\"$1\" && git update-ref -d refs/archive/\"$1\" #"
+
 #do our best to make diff output friendly for humans
 [diff]
     renames = copies
