@@ -111,7 +111,9 @@
     #reset accidentally-resolved file to conflicting state (plus more helpful alias)
     com = checkout -m
     unresolve = checkout -m
-
+    #deliberately detach HEAD
+    cod = checkout --detach
+    detach = checkout --detach
 
     #ADD
     a = add
