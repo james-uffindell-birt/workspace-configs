@@ -214,8 +214,8 @@
     #for when you actually PLAN to do an interactive rebase rather than doing it last-minute
     cf = commit -q --fixup
     cs = commit -q --squash
-    #maybe not worth making an alias, but:
-    #commit -q -c HEAD@{1} to reuse the commit message (with editing) of wherever HEAD was before, especially good after a git rr when rebasing or amending
+    #commit reusing previous location's message (wherever HEAD was before), especially good after a git rr when rebasing or amending
+    crp = commit -q -c HEAD@{1}
 
     cp = cherry-pick
     cpc = cherry-pick --continue
