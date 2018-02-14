@@ -159,6 +159,7 @@
 
     #DIFF
     #diffs between HEAD and working dir (or between specified commits)
+    #usage: `git d[cw]` to show current working dir changes; `git d[cw] X Y` to show changes between X and Y
     d = diff
     dw = diff -w
     dc = diff --color-words='\\w+|[^[:space:]]'
@@ -177,6 +178,7 @@
     dlcw = diff --color-words='\\w+|[^[:space:]]' -w HEAD~ HEAD
 
     #"specific commit"
+    #usage: `git dd[cw] X` to show changes introduced by X
     dd = "!git d \"$1\"~ \"$1\" #"
     ddw = "!git dw \"$1\"~ \"$1\" #"
     ddc = "!git dc \"$1\"~ \"$1\" #"
@@ -246,14 +248,15 @@
     rbf = rebase -q -f
     rbfi = rebase -q --no-ff -i
 
-    #rework the last N commits, eg "git redo 5" to rework the last 5 commits
+    #rework the last N commits
+    #usage: `git redo N` to rework the last N commits in-place
     redo = !"git rebase -q -i HEAD~$1 #"
 
     #work with just bits of files (from index to working dir)
     rp = reset -p
     #unstage a file
     rh = reset HEAD
-    #step back a commit (reset branch back but not working dir)
+    #step back a commit (reset branch back but not working dir); useful when editing a commit in interactive-rebase
     rr = reset HEAD~
 
     #see who is winning at writing code
@@ -265,37 +268,51 @@
     wp = worktree prune
 
     #LOG
-    #default option (mostly sane but lots of merges make the wraparound quite frightening)
+    #one-line output for all commits on all branches
     lg = !"git lg1"
+    #one-line output for all commits on a specific branch (defaults to HEAD)
+    #usage: `git lgb B` to show history of branch B
     lgb = !"git lg1b"
-    #default option but do our best to filter out the commits on other branches that got merged in
+
+    #simplified log aliases defined only for the 'all branch' option since single-branch output is normally simple enough already
+    #shorter one-line output; only follow the history through the first parent (effectively hides commits on feature branches that we don't have local refs for)
     lgs = !"git lg1 --first-parent"
     #even shorter: filter out any commit that isn't a tag, merge, or branch tip
     lgss = !"git lg1 --simplify-by-decoration"
     #shorter still! just show tags and branch tips
     lgsss = !"git lg1 --simplify-by-decoration --no-merges"
+
     #show only stuff reachable from local branches
     lgl = !"git lg1 --not --branches=remote"
 
     #show commits only in specific range
+    #usage: `git lgr X Y` to show commits between X and Y
     lgr = !"git lg1-specific \"$1\"~..\"$2\" #"
 
-    #truncated logs - default and filtered-default modes
+    #truncated logs for the most commonly-used options - only shows the top N commits
+    #usage: `git lgt N` to show the most recent N commits across all branches
     lgt = !"git lg -n"
+    #usage: `git lgst N` to show the most recent N non-feature-branch commits across all branches
     lgst = !"git lgs -n"
+    #usage: `git lgtb N B` to show the most recent N commits on branch B (defaults to HEAD)
     lgtb = !"git lgb -n"
 
     #successively more verbose options, shamelessly stolen from someone helpful on stackoverflow
+    #for all branches
     lg1 = !"git lg1b --all"
     lg2 = !"git lg2b --all"
     lg3 = !"git lg3b --all"
 
+    #for specific branches
+    #simple one-line output: hash, date, summary, author
     lg1b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(241)- %an%C(reset)%C(auto)%d%C(reset)'
+    #two-line output: the same, but include absolute timestamp as well as relative date
     lg2b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(241)- %an%C(reset)'
+    #three-line output: also includes committer information as well as author information
     lg3b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset) %C(141)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(241)- %an <%ae> %C(reset) %C(241)(committer: %cn <%ce>)%C(reset)'
 
     #PICKAXE
-    #commits which changed number of matching lines
+    #commits which changed the number of matching lines
     pa = log --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
     pav = log -p --source --all --pickaxe-regex --decorate --abbrev-commit --format=tformat:'%C(117)%h%C(reset) - %C(149)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' -S
     #commits which changed any matching lines
@@ -313,16 +330,20 @@
     missing = !"git log --oneline --cherry $1...$2 #"
 
     #archive a commit - put it in a ref but not in a proper branch; that way it won't get GCed but it also won't show up in branch -l
+    #usage: `git ar A` to create a new archive ref called A pointing at the current commit
     ar = !"git update-ref refs/archive/\"$1\" HEAD #"
     #list archived commits
     arl = for-each-ref --sort=-authordate --format='* %(color:117)%(objectname:short)%(color:reset) - %(color:149)(%(authordate:relative))%(color:reset) %(contents:subject) %(color:221)(%(color:reset)%(refname)%(color:221))%(color:reset)' refs/archive/
     #resurrect an archived commit onto a new branch (but leave the archived ref around)
+    #usage: `git arc A B` to create a branch B pointing at the archived ref A
     arc = !"git branch \"$2\" refs/archive/\"$1\" #"
-    #pop an archived commit onto a branch (git arp <archive> <new-branch>), deleting the archived ref
+    #pop an archived commit onto a branch, deleting the archived ref
+    #usage: `git arp A B` to create a branch B pointing at the archived ref A
     arp = !"git branch \"$2\" refs/archive/\"$1\" && git update-ref -d refs/archive/\"$1\" #"
     #force versions of the above (in case the branch exists already)
     arcf = !"git branch -f \"$2\" refs/archive/\"$1\" #"
     arpf = !"git branch -f \"$2\" refs/archive/\"$1\" && git update-ref -d refs/archive/\"$1\" #"
+    #we may also want checkout -b equivalents of the 'create branch' aliases here
 
 #do our best to make diff output friendly for humans
 [diff]
@@ -334,6 +355,7 @@
     colorMoved = zebra
 
 [diff "csharp"]
+    #copied from the regular git version but with modifications to cope with 'async' and function decls with close-paren on subsequent lines
     xfuncname = ^[[:space:]]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async|partial)[[:space:]]+)*[][<>@.~_[:alnum:]]+[[:space:]]+[<>@._[:alnum:]]+[[:space:]]*\\([^\\(\\)]*)\\)?[[:space:]]*$
 
 [commit]
