@@ -300,10 +300,15 @@
     lgtb = !"git lgb -n"
 
     #successively more verbose options, shamelessly stolen from someone helpful on stackoverflow
-    #for all branches
-    lg1 = !"git lg1b --all"
-    lg2 = !"git lg2b --all"
-    lg3 = !"git lg3b --all"
+    #for all branches, but excluding archived commits - could also do this by passing --branches --remotes --tags instead of --all, I think
+    lg1 = !"git lg1b --exclude=refs/archive/* --all"
+    lg2 = !"git lg2b --exclude=refs/archive/* --all"
+    lg3 = !"git lg3b --exclude=refs/archive/* --all"
+
+    #for all branches including archived commits
+    lg1f = !"git lg1b --all"
+    lg2f = !"git lg2b --all"
+    lg3f = !"git lg3b --all"
 
     #for specific branches
     #simple one-line output: hash, date, summary, author
