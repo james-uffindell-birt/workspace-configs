@@ -121,6 +121,8 @@
     aa = add -A
     #add all tracked files
     at = add -u
+    #record that we want to add a file (required before we can add -p it)
+    an = add -N
     #work with just bits of files (from working dir to index)
     ap = add -p
     ai = add -i
