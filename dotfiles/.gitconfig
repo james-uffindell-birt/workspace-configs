@@ -373,7 +373,7 @@
 
 [core]
     #modify files as appropriate
-    excludesfile = C:/Users/james.uffindell/.gitglobal
+    excludesfile = C:/Users/james.uffindell/.gitignore
     attributesfile = C:/Users/james.uffindell/.gitattributes
     pager = less -r
 

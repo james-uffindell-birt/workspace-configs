@@ -1,0 +1,12 @@
+# Intellij/Rider IDE settings folder
+**/.idea/**
+
+# VS IDE settings folder
+**/.vs/**
+
+# code analysis output
+*.lastcodeanalysissucceeded
+
+# visual studio profiler output
+*.vspx
+*.psess
