@@ -228,7 +228,15 @@
 
     f = fetch -q
     #adjust main remote as necessary
-    update = fetch origin
+    update = fetch -q origin
+    #usage:`git fpr[m] R N` to get pull request N (or its merge result) from remote R and stash it in a local 'pr' ref
+    fpr = !"git fetch -q \"$1\" +refs/pull/\"$2\"/head:refs/pr/\"$1\"/\"$2\" #"
+    fprm = !"git fetch -q \"$1\" +refs/pull/\"$2\"/merge:refs/pr/merge/\"$1\"/\"$2\" #"
+    #usage: `git prd R N` to delete a local pull request ref
+    prd = !"git update-ref -d refs/pr/\"$1\"/\"$2\" #"
+    #`git fpr[m]bR N B` to get pull request N (or its merge result) from remote R and create a branch B at that commit
+    fprb = !"git fetch -q \"$1\" +refs/pull/\"$2\"/head:\"$3\" #"
+    fprmb = !"git fetch -q \"$1\" +refs/pull/\"$2\"/merge:\"$3\" #"
 
     #MERGE
     #always try and make a merge commit when doing a merge
