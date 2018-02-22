@@ -1,30 +1,19 @@
+#!/bin/bash
 
+COLOR_NONE="\\[\\e[0m\\]"
+MID_PURPLE="\\[\\033[38;5;99m\\]"
+MID_MARIGOLD="\\[\\033[38;5;221m\\]"
+MID_AQUA="\\[\\033[38;5;122m\\]"
+MID_ORANGE="\\[\\033[38;5;214m\\]"
+MID_RED="\\[\\033[38;5;196m\\]"
+MID_BLUE="\\[\\033[38;5;39m\\]"
+MID_GREEN="\\[\\033[38;5;149m\\]"
+MID_YELLOW="\\[\\033[38;5;227m\\]"
+MOSS_GREEN="\\[\\033[38;5;108m\\]"
+PALE_BLUE="\\[\\033[38;5;117m\\]"
 
-        RED="\[\033[0;31m\]"
-     YELLOW="\[\033[0;33m\]"
-      GREEN="\[\033[0;32m\]"
-       BLUE="\[\033[0;34m\]"
-  LIGHT_RED="\[\033[1;31m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
-LIGHT_BLUE="\[\033[1;34m\]"
-      WHITE="\[\033[1;37m\]"
- LIGHT_GRAY="\[\033[0;37m\]"
- COLOR_NONE="\[\e[0m\]"
-MID_PURPLE="\[\033[38;5;99m\]"
-MID_LILAC="\[\033[38;5;147m\]"
-MID_MARIGOLD="\[\033[38;5;221m\]"
-MID_AQUA="\[\033[38;5;122m\]"
-MID_ORANGE="\[\033[38;5;214m\]"
-MID_RED="\[\033[38;5;196m\]"
-MID_BLUE="\[\033[38;5;39m\]"
-MID_GREEN="\[\033[38;5;149m\]"
-MID_YELLOW="\[\033[38;5;227m\]"
-MOSS_GREEN="\[\033[38;5;108m\]"
-PALE_BLUE="\[\033[38;5;117m\]"
-
-ACTUAL_BACKGROUND="\[\033[48;2;13;0;13m\]"
-LILAC_BACKGROUND="\[\033[48;2;175;175;255m\]"
-BG_AS_FOREGROUND="\[\033[38;2;13;0;13m\]"
+LILAC_BACKGROUND="\\[\\033[48;2;175;175;255m\\]"
+BG_AS_FOREGROUND="\\[\\033[38;2;19;0;13m\\]"
 
  
 function parse_git_branch {
@@ -32,9 +21,9 @@ function parse_git_branch {
   git rev-parse --git-dir &> /dev/null
   git_status="$(git status 2> /dev/null)"
   # also include "unmerged" files in working file count
-  working_file_count="$(git status -s 2> /dev/null | egrep '^.[MARCD]|^.U|^U.' | wc -l)"
-  indexed_file_count="$(git status -s 2> /dev/null | egrep '^[MARCD]' | wc -l)"
-  untracked_file_count="$(git status -s 2> /dev/null | egrep '^\?\?' | wc -l)"
+  working_file_count="$(git status -s 2> /dev/null | grep -c -E '^.[MARCD]|^.U|^U.' )"
+  indexed_file_count="$(git status -s 2> /dev/null | grep -c -E '^[MARCD]' )"
+  untracked_file_count="$(git status -s 2> /dev/null | grep -c -E '^\?\?' )"
   
   # various sorts of output to look for
   branch_pattern="^On branch ([^${IFS}]*)"
@@ -54,7 +43,7 @@ function parse_git_branch {
   if [[ ${working_file_count} =~ ${zero_pattern} ]]; then
     working_state="${MID_GREEN}✓    "
   elif [[ ${working_file_count} =~ ${digits_pattern} ]]; then
-    working_state="${MID_GREEN}☢ $(printf '%-2s' ${working_file_count}) "
+    working_state="${MID_GREEN}☢ $(printf '%-2s' "${working_file_count}") "
   else
     working_state="${MID_GREEN}☢ ∞  "
   fi
@@ -62,7 +51,7 @@ function parse_git_branch {
   if [[ ${indexed_file_count} =~ ${zero_pattern} ]]; then
     index_state="${MID_PURPLE}✓    "
   elif [[ ${indexed_file_count} =~ ${digits_pattern} ]]; then
-    index_state="${MID_PURPLE}❄ $(printf '%-2s' ${indexed_file_count}) "
+    index_state="${MID_PURPLE}❄ $(printf '%-2s' "${indexed_file_count}") "
   else
     index_state="${MID_PURPLE}❄ ∞  "
   fi
@@ -70,7 +59,7 @@ function parse_git_branch {
   if [[ ${untracked_file_count} =~ ${zero_pattern} ]]; then
     untracked_state="${PALE_BLUE}✓    "
   elif [[ ${untracked_file_count} =~ ${digits_pattern} ]]; then
-    untracked_state="${PALE_BLUE}❄ $(printf '%-2s' ${untracked_file_count}) "
+    untracked_state="${PALE_BLUE}❄ $(printf '%-2s' "${untracked_file_count}") "
   else
     untracked_state="${PALE_BLUE}❄ ∞  "
   fi
@@ -80,14 +69,14 @@ function parse_git_branch {
   if [[ ${git_status} =~ ${remote_ahead_pattern} ]]; then
     num_commits=${BASH_REMATCH[2]}
     if [[ ${num_commits} =~ ${digits_pattern} ]]; then
-      remote="${MOSS_GREEN}↑ $(printf '%-2s' ${num_commits}) "
+      remote="${MOSS_GREEN}↑ $(printf '%-2s' "${num_commits}") "
     else
       remote="${MOSS_GREEN}↑ ∞  "
     fi
-  elif [[ ${get_status} =~ ${remote_behind_pattern} ]]; then
+  elif [[ ${git_status} =~ ${remote_behind_pattern} ]]; then
     num_commits=${BASH_REMATCH[2]}
     if [[ ${num_commits} =~ ${digits_pattern} ]]; then
-      remote="${MOSS_GREEN}↓ $(printf '%-2s' ${num_commits}) "
+      remote="${MOSS_GREEN}↓ $(printf '%-2s' "${num_commits}") "
     else
       remote="${MOSS_GREEN}↓ ∞  "
     fi
@@ -210,13 +199,13 @@ function parse_git_branch {
 
 function prompt_func() {
     previous_return_value=$?;
-    if [ "$TERM" != "linux" -a -z "$EMACS" ]
+    if [ "$TERM" != "linux" ] && [ -z "$EMACS" ]
     then
-        TITLEBAR="\[\e]2;\u@\h:\w\a\]"
+        TITLEBAR="\\[\\e]2;\\u@\\h:\\w\\a\\]"
     else
         TITLEBAR=""
     fi
-    prompt="${TITLEBAR}${MID_PURPLE}[${MID_BLUE}\u@\h ${BG_AS_FOREGROUND}${LILAC_BACKGROUND}\w${COLOR_NONE}$(parse_git_branch)${MID_PURPLE}]${COLOR_NONE}"
+    prompt="${TITLEBAR}${MID_PURPLE}[${MID_BLUE}\\u@\\h ${BG_AS_FOREGROUND}${LILAC_BACKGROUND}\\w${COLOR_NONE}$(parse_git_branch)${MID_PURPLE}]${COLOR_NONE}"
     if test $previous_return_value -eq 0
     then
         PS1="${prompt}${MID_AQUA}\\\$${COLOR_NONE} "
