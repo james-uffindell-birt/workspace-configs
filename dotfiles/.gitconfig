@@ -359,6 +359,10 @@
     arcf = !"git branch -f \"$2\" refs/archive/\"$1\" #"
     arpf = !"git branch -f \"$2\" refs/archive/\"$1\" && git update-ref -d refs/archive/\"$1\" #"
     #we may also want checkout -b equivalents of the 'create branch' aliases here
+    #apply the changes in an archived commit into current working dir (don't mix up arap and arp!)
+    #this is used for archived commits that are, eg, local config changes that we often want to have applied on our local dev copy
+    #usage: `git arap A` to apply the changes in commit A
+    arap = !"git format-patch refs/archive/\"$1\"~..refs/archive/\"$1\" --stdout | git apply #"
 
 #do our best to make diff output friendly for humans
 [diff]
