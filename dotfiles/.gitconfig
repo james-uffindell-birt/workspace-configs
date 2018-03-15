@@ -220,11 +220,13 @@
     cs = commit -q --squash
     #commit reusing previous location's message (wherever HEAD was before), especially good after a git rr when rebasing or amending
     crp = commit -q -c HEAD@{1}
+    #interactive committing
+    cp = commit -q -p
 
-    cp = cherry-pick
-    cpc = cherry-pick --continue
-    cpq = cherry-pick --quit
-    cpa = cherry-pick --abort
+    chp = cherry-pick
+    chpc = cherry-pick --continue
+    chpq = cherry-pick --quit
+    chpa = cherry-pick --abort
 
     f = fetch -q
     #adjust main remote as necessary
@@ -325,6 +327,9 @@
     lg2b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(241)- %an%C(reset)'
     #three-line output: also includes committer information as well as author information
     lg3b = log --graph --abbrev-commit --decorate --format=format:'%C(117)%h%C(reset) - %C(141)%aD%C(reset) %C(149)(%ar)%C(reset) %C(141)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(241)- %an <%ae> %C(reset) %C(241)(committer: %cn <%ce>)%C(reset)'
+
+    #output commit headers and description, but not diff output
+    read = show -s
 
     #PICKAXE
     #commits which changed the number of matching lines
