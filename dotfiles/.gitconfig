@@ -220,11 +220,13 @@
     cs = commit -q --squash
     #commit reusing previous location's message (wherever HEAD was before), especially good after a git rr when rebasing or amending
     crp = commit -q -c HEAD@{1}
+    #interactive committing
+    cp = commit -q -p
 
-    cp = cherry-pick
-    cpc = cherry-pick --continue
-    cpq = cherry-pick --quit
-    cpa = cherry-pick --abort
+    chp = cherry-pick
+    chpc = cherry-pick --continue
+    chpq = cherry-pick --quit
+    chpa = cherry-pick --abort
 
     f = fetch -q
     #adjust main remote as necessary
